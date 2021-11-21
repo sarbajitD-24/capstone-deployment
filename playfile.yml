@@ -1,0 +1,6 @@
+- hosts: B35-Capstone
+  roles: 
+  #- 01-download-latest-artifact
+  - 02-remove-previous-deployments
+  - 03-build-image
+  - 04-deploy-artifact-in-container

@@ -1,0 +1,8 @@
+version: "3.1"
+services:
+  capstone_app:
+    image: docker-capstone
+    ports:
+    - '6060:6060'
+    - '9278:8080'
+    network_mode: bridge

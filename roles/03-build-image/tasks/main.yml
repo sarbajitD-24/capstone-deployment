@@ -1,0 +1,11 @@
+---
+# tasks file for roles/03-build-image
+- name: Build Docker image from Dockerfile (includes downloaded artifact)
+  docker_image:
+    name: docker-capstone
+    build:
+      path: "{{ build_image_role_dir }}/files"
+      pull: no
+    state: present
+    source: build
+    force_source: yes

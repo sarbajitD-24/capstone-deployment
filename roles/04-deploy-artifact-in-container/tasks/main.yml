@@ -1,0 +1,11 @@
+---
+# tasks file for roles/04-deploy-artifact-in-container
+- name: Create and start services
+  community.docker.docker_compose:
+    project_name: Conference_Room
+    project_src: "{{ compose_file_location }}"
+    build: no
+  register: output
+
+- debug:
+    var: output

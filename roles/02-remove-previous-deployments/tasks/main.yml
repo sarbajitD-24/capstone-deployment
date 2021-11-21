@@ -1,0 +1,27 @@
+---
+# tasks file for roles/02-remove-previous-deployments
+- name: stop deployment container (of previous deployment cycle)
+  block:
+  - name: attempting to stop deployment container        
+    docker_container:
+      name: conference_room_capstone_app_1
+      state: stopped
+      
+  rescue:
+  - name: couldn't find container
+    debug:
+      msg: "No such container: conference_room_capstone_app_1 exists currently in this server"
+
+- name: remove deployment container (of previous deployment cycle)
+  docker_container:
+    name: conference_room_capstone_app_1
+    state: absent
+  register: output
+
+- debug:
+    var: output
+
+- name: remove deployment container image (of previous deployment cycle)
+  docker_image: 
+    name: docker-capstone:latest
+    state: absent

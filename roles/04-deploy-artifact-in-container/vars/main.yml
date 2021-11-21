@@ -1,0 +1,3 @@
+---
+# vars file for roles/04-deploy-artifact-in-container
+compose_file_location: /home/sarbajit/expr/proj-ansi-roles/roles/04-deploy-artifact-in-container/files/

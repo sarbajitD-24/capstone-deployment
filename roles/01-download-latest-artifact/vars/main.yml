@@ -1,0 +1,3 @@
+---
+# vars file for roles/01-download-latest-artifact
+base_dir: /home/sarbajit/expr/proj-ansi-roles/roles/03-build-image/files

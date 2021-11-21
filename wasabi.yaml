@@ -1,0 +1,42 @@
+- hosts: B35-Capstone
+  vars:
+    base_dir: /home/sarbajit/expr/ansi-proj
+  tasks:
+  #- name: Download a file and change its name
+  #  get_url:
+  #    url: https://file-examples-com.github.io/uploads/2017/02/zip_5MB.zip
+  #    dest: "{{  base_dir  }}/newname.zip"
+  - name: Get latest artifact uri response
+    uri:
+      url: "http://192.168.56.88:8081/artifactory/api/storage/libs-snapshot-local/com/wipro/ConferenceRoomCapstoneB35/0.0.1-SNAPSHOT/?lastModified"
+      url_username: admin
+      url_password: Feb@2021
+      method: GET
+      return_content: yes
+      status_code: 200
+      body_format: json
+    register: data
+
+  - name: Save the JSON data to a Variable as a Fact
+    set_fact:
+      latestArtifactUriResponse: "{{ data.content | from_json }}"
+
+  - name: Print the saved json response
+    debug:
+      var: latestArtifactUriResponse
+
+  - name: Extract URI details from JSON file(uri response)
+    set_fact:
+      downloadUrl: "{{ latestArtifactUriResponse | json_query(jmesquery) }}"
+    vars:
+      jmesquery: 'uri'
+
+  - name: Debug the URI value
+    debug: msg=" Newest Artifact Link => {{ downloadUrl }} ."
+
+  - name: Download the latest artifact uploaded into artifactory repository
+    get_url:
+      url: "{{ downloadUrl }}"
+      dest: "{{  base_dir  }}/ConferenceRoomCapstoneB35.war"
+      url_username: admin
+      url_password: Feb@2021
